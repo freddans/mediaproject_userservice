@@ -95,14 +95,17 @@ public class UserService {
 
     public PlayedMedia playMedia(long id, String url) {
         User user = findUserById(id);
+        System.out.println("find user");
 
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ERROR: User not found with ID: " + id);
         }
 
         if (isMusic(url)) {
+            System.out.println("its music");
 
             if (!hasPlayedMediaBefore(user, url)) {
+                System.out.println("song has not been played");
 
                 Music mediaToPlay = getMusicByUrl(url);
 
@@ -163,6 +166,8 @@ public class UserService {
                 return savedMedia;
 
             } else {
+                System.out.println("song has been played");
+
                 PlayedMedia mediaBeenPlayed = getMediaFromUsersMediaList(user, url);
 
                 Music mediaToPlay = getMusicByUrl(url);
